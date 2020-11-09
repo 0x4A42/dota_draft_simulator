@@ -1,119 +1,119 @@
-Abaddon
-Alchemist
-Ancient Apparition
-Anti-Mage
-Arc Warden
-Axe
-Bane
-Batrider
-Beastmaster
-Bloodseeker
-Bounty Hunter
-Brewmaster
-Bristleback
-Broodmother
-Centaur Warrunner
-Chaos Knight
-Chen
-Clinkz
-Clockwerk
-Crystal Maiden
-Dark Seer
-Dark Willow
-Dazzle
-Death Prophet
-Disruptor
-Doom
-Dragon Knight
-Drow Ranger
-Earth Spirit
-Earthshaker
-Elder Titan
-Ember Spirit
-Enchantress
-Enigma
-Faceless Void
-Grimstroke
-Gyrocopter
-Huskar
-Invoker
-Io
-Jakiro
-Juggernaut
-Keeper of the Light
-Kunkka
-Legion Commander
-Leshrac
-Lich
-Lifestealer
-Lina
-Lion
-Lone Druid
-Luna
-Lycan
-Magnus
-Mars
-Medusa
-Meepo
-Mirana
-Monkey King
-Morphling
-Naga Siren
-Nature’s Prophet
-Necrophos
-Night Stalker
-Nyx Assassin
-Ogre Magi
-Omniknight
-Oracle
-Outworld Devourer
-Pangolier
-Phantom Assassin
-Phantom Lancer
-Phoenix
-Puck
-Pudge
-Pugna
-Queen of Pain
-Razor
-Riki
-Rubick
-Sand King
-Shadow Demon
-Shadow Fiend
-Shadow Shaman
-Silencer
-Skywrath Mage
-Slardar
-Slark
-Snapfire
-Sniper
-Spectre
-Spirit Breaker
-Storm Spirit
-Sven
-Techies
-Templar Assassin
-Terrorblade
-Tidehunter
-Timbersaw
-Tinker
-Tiny
-Treant Protector
-Troll Warlord
-Tusk
-Underlord
-Undying
-Ursa
-Vengeful Spirit
-Venomancer
-Viper
-Visage
-Void Spirit
-Warlock
-Weaver
-Windranger
-Winter Wyvern
-Witch Doctor
-Wraith King
-Zeus
+ABADDON
+ALCHEMIST
+ANCIENT APPARITION
+ANTI-MAGE
+ARC WARDEN
+AXE
+BANE
+BATRIDER
+BEASTMASTER
+BLOODSEEKER
+BOUNTY HUNTER
+BREWMASTER
+BRISTLEBACK
+BROODMOTHER
+CENTAUR WARRUNNER
+CHAOS KNIGHT
+CHEN
+CLINKZ
+CLOCKWERK
+CRYSTAL MAIDEN
+DARK SEER
+DARK WILLOW
+DAZZLE
+DEATH PROPHET
+DISRUPTOR
+DOOM
+DRAGON KNIGHT
+DROW RANGER
+EARTH SPIRIT
+EARTHSHAKER
+ELDER TITAN
+EMBER SPIRIT
+ENCHANTRESS
+ENIGMA
+FACELESS VOID
+GRIMSTROKE
+GYROCOPTER
+HUSKAR
+INVOKER
+IO
+JAKIRO
+JUGGERNAUT
+KEEPER OF THE LIGHT
+KUNKKA
+LEGION COMMANDER
+LESHRAC
+LICH
+LIFESTEALER
+LINA
+LION
+LONE DRUID
+LUNA
+LYCAN
+MAGNUS
+MARS
+MEDUSA
+MEEPO
+MIRANA
+MONKEY KING
+MORPHLING
+NAGA SIREN
+NATURE�S PROPHET
+NECROPHOS
+NIGHT STALKER
+NYX ASSASSIN
+OGRE MAGI
+OMNIKNIGHT
+ORACLE
+OUTWORLD DEVOURER
+PANGOLIER
+PHANTOM ASSASSIN
+PHANTOM LANCER
+PHOENIX
+PUCK
+PUDGE
+PUGNA
+QUEEN OF PAIN
+RAZOR
+RIKI
+RUBICK
+SAND KING
+SHADOW DEMON
+SHADOW FIEND
+SHADOW SHAMAN
+SILENCER
+SKYWRATH MAGE
+SLARDAR
+SLARK
+SNAPFIRE
+SNIPER
+SPECTRE
+SPIRIT BREAKER
+STORM SPIRIT
+SVEN
+TECHIES
+TEMPLAR ASSASSIN
+TERRORBLADE
+TIDEHUNTER
+TIMBERSAW
+TINKER
+TINY
+TREANT PROTECTOR
+TROLL WARLORD
+TUSK
+UNDERLORD
+UNDYING
+URSA
+VENGEFUL SPIRIT
+VENOMANCER
+VIPER
+VISAGE
+VOID SPIRIT
+WARLOCK
+WEAVER
+WINDRANGER
+WINTER WYVERN
+WITCH DOCTOR
+WRAITH KING
+ZEUS
