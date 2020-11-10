@@ -128,6 +128,13 @@ public class Team {
 	public void setFifthHero(String fifthHero) {
 		this.fifthHero = fifthHero;
 	}
+
+
+	@Override
+	public String toString() {
+		return "Team [side=" + side + ", firstHero=" + firstHero + ", secondHero=" + secondHero + ", thirdHero="
+				+ thirdHero + ", fourthHero=" + fourthHero + ", fifthHero=" + fifthHero + "]";
+	}
 	
 	
 	

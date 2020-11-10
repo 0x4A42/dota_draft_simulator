@@ -13,21 +13,15 @@ import java.util.Map;
 import java.util.Scanner;
 
 /**
- * Some thoughts: make two arrays containing their hero picks, then loop through
- * them to add to the object (function) iterate through dict, if value =
- * Radiant, do X, if Dire, do Y.
- * Could return a 2D array containing heroes
- * Rework it and have the iteration done within the checkBanorPick or BanOrPick method, return map there, ultimately return 2d array
- * 
+ *
  * @author Jordan
  *
  */
 public class Drafter {
 
-	public final static int MAX_HEROES_ON_TEAM = 5;
 	public final static int MAX_DRAFT_ROUNDS = 24;
-	public static String[] radiantHeroes = new String[5];
-	public static String[] direHeroes = new String[5];
+	public static ArrayList<String> radiantHeroes = new ArrayList<String>();
+	public static ArrayList<String> direHeroes = new ArrayList<String>();
 
 	public static void main(String[] args) {
 		Team radiant = new Team();
@@ -36,26 +30,42 @@ public class Drafter {
 		dire.setSide(Side.DIRE);
 		Map<String, Boolean> heroes = new TreeMap<String, Boolean>();
 		Scanner userInput = new Scanner(System.in);
+		DraftingThread radiantReserveTimeThread = new DraftingThread();
+		
+		//DraftingThread direReserveTimeThread = new DraftingThread();
+		//Thread direThread = new Thread(direReserveTimeThread);
+		
 		int[] bans = { 1, 2, 3, 4, 9, 10, 11, 12, 13, 14, 19, 20, 21, 22 }; // notes which rounds of the draft are bans
 		heroes = createHeroes(); // read in from file
-
 		Map<Integer, String> turnOrder = determineDraftOrder(userInput);
 		int count = 1; // controls the below loop
 
+		
+		
+		
 		do {
 			String banOrPick = checkBanOrPick(count, bans);
 			String teamForTurn = turnOrder.get(count);
 			if (banOrPick == "Ban") {
-				System.out.println(teamForTurn.toUpperCase() + ", please enter the hero you wish to ban.");
+				radiantReserveTimeThread.suspend();
+				System.out.println(teamForTurn.toUpperCase() + " - please enter the hero you wish to ban.");
+
 			} else {
-				System.out.println(teamForTurn.toUpperCase() + ", please enter the hero you wish to pick.");
+				radiantReserveTimeThread.resume();
+				System.out.println(teamForTurn.toUpperCase() + " - please enter the hero you wish to pick.");
+
 			}
 			heroes = banOrPickHero(heroes, userInput, banOrPick, teamForTurn);
 			count++;
 		} while (count <= MAX_DRAFT_ROUNDS);
 
-	}
+		updateTeamObject(radiantHeroes, radiant);
+		updateTeamObject(direHeroes, dire);
 
+		System.out.println(radiant.toString());
+		System.out.println(dire.toString());
+
+	}
 
 	/**
 	 * Prompts the user for which team will have first pick (and ultimately decide
@@ -163,7 +173,7 @@ public class Drafter {
 			bufferedReadHeroes.close(); // tidy resources
 			readHeroes.close(); // tidy resources
 		} catch (FileNotFoundException e) {
-			System.out.println("Cannot find hero file to read.");
+			System.err.println("Cannot find hero file to read.");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -196,11 +206,13 @@ public class Drafter {
 	 * Simulates the banning of a hero, making it unable to be used for picking or
 	 * banning in the future.
 	 * 
-	 * Change iteration to be within this function and maybe have a sub function where the heroes are banned?
-	 * Ultimately return a 2d array?
+	 * Change iteration to be within this function and maybe have a sub function
+	 * where the heroes are banned? Ultimately return a 2d array?
+	 * 
 	 * @return heroToBan, the hero to be banned.
 	 */
-	public static Map<String, Boolean> banOrPickHero(Map<String, Boolean> heroes, Scanner userInput, String banOrPick, String team) {
+	public static Map<String, Boolean> banOrPickHero(Map<String, Boolean> heroes, Scanner userInput, String banOrPick,
+			String team) {
 		String heroToPick = "";
 		Boolean allowedHero = false;
 		while (allowedHero == false) {
@@ -208,35 +220,46 @@ public class Drafter {
 				heroToPick = userInput.nextLine();
 				Boolean status = heroes.get(heroToPick.toUpperCase());
 
-				if (status == true) { // if hero is in the pool, ban it and exit look
+				if (status == true) { // if hero is in the pool, ban or pick it.
 					heroes.put(heroToPick.toUpperCase(), false);
 					if (banOrPick == "Pick" && team == "Radiant") {
-						System.out.println("Radiant has picked... " +heroToPick.toUpperCase());
+						System.out.println("Radiant has picked " + heroToPick.toUpperCase());
+						radiantHeroes.add(heroToPick);
 					} else if (banOrPick == "Pick" && team == "Dire") {
-						System.out.println("Dire has picked... " +heroToPick.toUpperCase());
+						System.out.println("Dire has picked " + heroToPick.toUpperCase());
+						direHeroes.add(heroToPick);
+					} else if (banOrPick == "Ban") {
+						System.out.println(heroToPick.toUpperCase() + " has been banned by " + team);
 					}
-					allowedHero = true;
+					allowedHero = true; // exit loop
 				} else {
-					System.err.println(heroToPick.toUpperCase() + " has been banned or picked. Please select another.");
-				}
+					System.err.println(
+							heroToPick.toUpperCase() + " has been banned or picked. Please select a different hero.");
+				} // end of if else
 
 			} catch (InputMismatchException invalidInput) {
 				System.out.println("Invalid input, please try again.");
 			} catch (NullPointerException e) {
 				System.err.println("Invalid hero entered, try again.");
-			}
-		}
+			} // end of try catch
+		} // end of while
 		return heroes;
 
-	}
+	} // end of banOrPickHero
 
-	public static void updateTeamObject(Team teamToUpdate, String[] heroes) {
+	/***
+	 * Updates the Team object to set all of the heroes picked.
+	 * 
+	 * @param heroes       the heroes picked for the relevant team
+	 * @param teamToUpdate the team to update.
+	 */
+	public static void updateTeamObject(ArrayList<String> heroes, Team teamToUpdate) {
 
-		teamToUpdate.setFirstHero(heroes[0]);
-		teamToUpdate.setSecondHero(heroes[1]);
-		teamToUpdate.setThirdHero(heroes[2]);
-		teamToUpdate.setFourthHero(heroes[3]);
-		teamToUpdate.setFifthHero(heroes[4]);
+		teamToUpdate.setFirstHero(heroes.get(0));
+		teamToUpdate.setSecondHero(heroes.get(1));
+		teamToUpdate.setThirdHero(heroes.get(2));
+		teamToUpdate.setFourthHero(heroes.get(3));
+		teamToUpdate.setFifthHero(heroes.get(4));
 
 	}
 }
