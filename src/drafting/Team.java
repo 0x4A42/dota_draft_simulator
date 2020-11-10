@@ -8,20 +8,21 @@ public class Team {
 	private String thirdHero; // represents the third hero picked
 	private String fourthHero; // represents the fourth hero picked
 	private String fifthHero; // represents the fifth hero picked
-	
-	// default constructor
-	public Team() {
-		
-	}
-	
-	
+
 	/**
-	 * @param side
-	 * @param firstHero
-	 * @param secondHero
-	 * @param thirdHero
-	 * @param fourthHero
-	 * @param fifthHero
+	 * Default constructor
+	 */
+	public Team() {
+
+	}
+
+	/**
+	 * @param side       the team's side (Radiant or Dire)
+	 * @param firstHero  the first hero picked by the team
+	 * @param secondHero the second hero picked by the team
+	 * @param thirdHero  the third hero picked by the team
+	 * @param fourthHero the fourth hero picked by the team
+	 * @param fifthHero  the fifth hero picked by the team
 	 */
 	public Team(Side side, String firstHero, String secondHero, String thirdHero, String fourthHero, String fifthHero) {
 		this.side = side;
@@ -32,23 +33,21 @@ public class Team {
 		this.fifthHero = fifthHero;
 	}
 
-
 	/**
-	 * Sets the side
+	 * Sets the side of the team
+	 * 
 	 * @param side, the side to set
 	 */
 	public void setSide(Side side) {
 		this.side = side;
 	}
-	
+
 	/**
-	 * Returns the side
-	 * @return, the side
+	 * Returns the side @return, the side
 	 */
 	public Side getSide() {
 		return this.side;
 	}
-
 
 	/**
 	 * @return the firstHero
@@ -57,14 +56,12 @@ public class Team {
 		return firstHero;
 	}
 
-
 	/**
 	 * @param firstHero the firstHero to set
 	 */
 	public void setFirstHero(String firstHero) {
 		this.firstHero = firstHero;
 	}
-
 
 	/**
 	 * @return the secondHero
@@ -73,14 +70,12 @@ public class Team {
 		return secondHero;
 	}
 
-
 	/**
 	 * @param secondHero the secondHero to set
 	 */
 	public void setSecondHero(String secondHero) {
 		this.secondHero = secondHero;
 	}
-
 
 	/**
 	 * @return the thirdHero
@@ -89,14 +84,12 @@ public class Team {
 		return thirdHero;
 	}
 
-
 	/**
 	 * @param thirdHero the thirdHero to set
 	 */
 	public void setThirdHero(String thirdHero) {
 		this.thirdHero = thirdHero;
 	}
-
 
 	/**
 	 * @return the fourthHero
@@ -105,14 +98,12 @@ public class Team {
 		return fourthHero;
 	}
 
-
 	/**
 	 * @param fourthHero the fourthHero to set
 	 */
 	public void setFourthHero(String fourthHero) {
 		this.fourthHero = fourthHero;
 	}
-
 
 	/**
 	 * @return the fifthHero
@@ -121,7 +112,6 @@ public class Team {
 		return fifthHero;
 	}
 
-
 	/**
 	 * @param fifthHero the fifthHero to set
 	 */
@@ -129,13 +119,10 @@ public class Team {
 		this.fifthHero = fifthHero;
 	}
 
-
 	@Override
 	public String toString() {
 		return "Team [side=" + side + ", firstHero=" + firstHero + ", secondHero=" + secondHero + ", thirdHero="
 				+ thirdHero + ", fourthHero=" + fourthHero + ", fifthHero=" + fifthHero + "]";
 	}
-	
-	
-	
-}
+
+} // end of class

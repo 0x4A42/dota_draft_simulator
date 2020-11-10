@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 /**
- *
+ * 
  * @author Jordan
  *
  */
@@ -31,18 +31,13 @@ public class Drafter {
 		Map<String, Boolean> heroes = new TreeMap<String, Boolean>();
 		Scanner userInput = new Scanner(System.in);
 		DraftingThread radiantReserveTimeThread = new DraftingThread();
-		
-		//DraftingThread direReserveTimeThread = new DraftingThread();
-		//Thread direThread = new Thread(direReserveTimeThread);
-		
-		int[] bans = { 1, 2, 3, 4, 9, 10, 11, 12, 13, 14, 19, 20, 21, 22 }; // notes which rounds of the draft are bans
-		heroes = createHeroes(); // read in from file
-		Map<Integer, String> turnOrder = determineDraftOrder(userInput);
-		int count = 1; // controls the below loop
+		DraftingThread direReserveTimeThread = new DraftingThread();
 
-		
-		
-		
+		int[] bans = { 1, 2, 3, 4, 9, 10, 11, 12, 13, 14, 19, 20, 21, 22 }; // notes which rounds of the draft are bans
+		heroes = createHeroesMap(); // read in from file
+		Map<Integer, String> turnOrder = determineDraftOrder(userInput);
+		int count = 1; // controls the below do while loop
+
 		do {
 			String banOrPick = checkBanOrPick(count, bans);
 			String teamForTurn = turnOrder.get(count);
@@ -61,9 +56,6 @@ public class Drafter {
 
 		updateTeamObject(radiantHeroes, radiant);
 		updateTeamObject(direHeroes, dire);
-
-		System.out.println(radiant.toString());
-		System.out.println(dire.toString());
 
 	}
 
@@ -91,7 +83,7 @@ public class Drafter {
 		System.out.println(firstPick.toUpperCase() + " will have first pick.");
 		userInput.nextLine(); // clear scanner for future use
 		return turnOrder;
-	}
+	}// end of determineDraftOrder()
 
 	/**
 	 * Generates a Map which will contain the draft order.
@@ -143,12 +135,12 @@ public class Drafter {
 			case 24:
 				teamToAdd = second;
 
-			}
+			} // end of switch
 			turnOrder.put(count, teamToAdd);
 			count++;
 		} while (count <= MAX_DRAFT_ROUNDS);
 		return turnOrder;
-	}
+	} // end of generateDraftOrderMap()
 
 	/**
 	 * Reads in every possible hero from file, adding it to a Map with a Key of the
@@ -157,7 +149,7 @@ public class Drafter {
 	 * 
 	 * @return Map<String, Boolean> containing all heroes.
 	 */
-	public static Map<String, Boolean> createHeroes() {
+	public static Map<String, Boolean> createHeroesMap() {
 		Map<String, Boolean> heroes = new TreeMap<String, Boolean>();
 
 		try {
@@ -170,16 +162,17 @@ public class Drafter {
 				heroes.put(line, true); // add to Map, K = hero name, V = true
 				line = bufferedReadHeroes.readLine(); // get next line
 			}
+
 			bufferedReadHeroes.close(); // tidy resources
 			readHeroes.close(); // tidy resources
 		} catch (FileNotFoundException e) {
 			System.err.println("Cannot find hero file to read.");
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		} // end of try catch
 
 		return heroes;
-	}
+	} // end of createHeroesMap()
 
 	/**
 	 * 
@@ -196,11 +189,11 @@ public class Drafter {
 				break;
 			} else {
 				banOrPick = "Pick";
-			}
-		}
+			} // end of if else
+		} // end of enhanced for
 		return banOrPick;
 
-	}
+	} // end of checkBanOrPick()
 
 	/**
 	 * Simulates the banning of a hero, making it unable to be used for picking or
@@ -261,5 +254,5 @@ public class Drafter {
 		teamToUpdate.setFourthHero(heroes.get(3));
 		teamToUpdate.setFifthHero(heroes.get(4));
 
-	}
-}
+	} // end of updateTeamObject()
+} // end of class
