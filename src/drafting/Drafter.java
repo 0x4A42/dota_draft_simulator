@@ -10,7 +10,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * 
@@ -30,28 +33,58 @@ public class Drafter {
 		dire.setSide(Side.DIRE);
 		Map<String, Boolean> heroes = new TreeMap<String, Boolean>();
 		Scanner userInput = new Scanner(System.in);
-		DraftingThread radiantReserveTimeThread = new DraftingThread();
-		DraftingThread direReserveTimeThread = new DraftingThread();
+		ReserveTimeThread radiantReserveTimeThread = new ReserveTimeThread();
+		ReserveTimeThread direReserveTimeThread = new ReserveTimeThread();
 
 		int[] bans = { 1, 2, 3, 4, 9, 10, 11, 12, 13, 14, 19, 20, 21, 22 }; // notes which rounds of the draft are bans
 		heroes = createHeroesMap(); // read in from file
 		Map<Integer, String> turnOrder = determineDraftOrder(userInput);
 		int count = 1; // controls the below do while loop
-
 		do {
+			DraftTimeThread normalDraftTime = new DraftTimeThread(); // new thread every cycle, as will be interrupted.
 			String banOrPick = checkBanOrPick(count, bans);
 			String teamForTurn = turnOrder.get(count);
 			if (banOrPick == "Ban") {
-				radiantReserveTimeThread.suspend();
 				System.out.println(teamForTurn.toUpperCase() + " - please enter the hero you wish to ban.");
-
 			} else {
-				radiantReserveTimeThread.resume();
 				System.out.println(teamForTurn.toUpperCase() + " - please enter the hero you wish to pick.");
-
 			}
+
+			normalDraftTime.startThread(); // start thread which tracks the initial 35 seconds of draft time
+
+			Timer checkDraftTime = new Timer(); // timer to schedule checking draft time function
+			checkDraftTime.scheduleAtFixedRate(new TimerTask() {
+				public void run() {
+					if (normalDraftTime.draftTime == 0) {
+						normalDraftTime.interrupt();
+						if (teamForTurn == "Radiant") {
+							if (radiantReserveTimeThread.getHasStarted() == false) {
+								radiantReserveTimeThread.startThread();
+							} else {
+								radiantReserveTimeThread.resume();
+							}
+
+						} else if (teamForTurn == "Dire") {
+							if (direReserveTimeThread.getHasStarted() == false) {
+								direReserveTimeThread.startThread();
+							} else {
+								direReserveTimeThread.resume();
+							}
+						}
+						checkDraftTime.cancel();
+					} // end of if
+				} // end of run()
+			}, 0, 1000);
+
 			heroes = banOrPickHero(heroes, userInput, banOrPick, teamForTurn);
 			count++;
+			// only check which reserve time thread to suspend if there is a chance it is
+			// active
+			if (normalDraftTime.draftTime == 0) {
+				determineThreadToSuspend(teamForTurn, radiantReserveTimeThread, direReserveTimeThread);
+			}
+
+			normalDraftTime.interrupt();
 		} while (count <= MAX_DRAFT_ROUNDS);
 
 		updateTeamObject(radiantHeroes, radiant);
@@ -208,6 +241,8 @@ public class Drafter {
 			String team) {
 		String heroToPick = "";
 		Boolean allowedHero = false;
+		int counter = 30;
+
 		while (allowedHero == false) {
 			try {
 				heroToPick = userInput.nextLine();
@@ -222,7 +257,7 @@ public class Drafter {
 						System.out.println("Dire has picked " + heroToPick.toUpperCase());
 						direHeroes.add(heroToPick);
 					} else if (banOrPick == "Ban") {
-						System.out.println(heroToPick.toUpperCase() + " has been banned by " + team);
+						System.out.println(heroToPick.toUpperCase() + " has been banned by " + team + ".");
 					}
 					allowedHero = true; // exit loop
 				} else {
@@ -239,6 +274,46 @@ public class Drafter {
 		return heroes;
 
 	} // end of banOrPickHero
+
+	/**
+	 * Determines which reserve time Thread to suspend.
+	 * 
+	 * @param teamForTurn              the team whose turn in the draft it is
+	 * @param radiantReserveTimeThread the thread representing Radiant's reserve
+	 *                                 time
+	 * @param direReserveTimeThread    the thread representing Dire's reserve time
+	 */
+	public static void determineThreadToSuspend(String teamForTurn, ReserveTimeThread radiantReserveTimeThread,
+			ReserveTimeThread direReserveTimeThread) {
+		if (teamForTurn == "Radiant") {
+			radiantReserveTimeThread.suspend();
+			;
+		} else if (teamForTurn == "Dire") {
+			direReserveTimeThread.suspend();
+		}
+
+	}
+
+	/**
+	 * If a team runs out of time in a pick, they randomly pick a hero. This method
+	 * grabs all keys from the heroes Map and randomly picks one, ensuring that it
+	 * is still in play by checking the boolean before ultimately returning a
+	 * randomly picked hero that is still in play.
+	 * 
+	 * @param heroes a map containing all heroes
+	 * @return randomHero a String, containing the name of the randomly generated
+	 *         hero.
+	 */
+	public static String randomHero(Map<String, Boolean> heroes) {
+		String randomHero = "";
+		Random generator = new Random();
+		do {
+			Object[] values = heroes.keySet().toArray();
+			randomHero = (String) values[generator.nextInt(values.length)];
+		} while (heroes.get(randomHero) == false);
+		System.out.println(randomHero);
+		return randomHero;
+	}
 
 	/***
 	 * Updates the Team object to set all of the heroes picked.

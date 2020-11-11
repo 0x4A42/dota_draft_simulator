@@ -10,14 +10,13 @@ package drafting;
  * @author Jordan
  *
  */
-public class DraftingThread implements Runnable {
-	int reserveTime = 130; // the team's total reserve time for the draft
-	Boolean suspended = false; // controls the pausing of the thread
+public class ReserveTimeThread implements Runnable {
+	private int reserveTime = 130; // the team's total reserve time for the draft
+	private Boolean suspended = false; // controls the pausing of the thread
+	private Boolean hasStarted = false;
 
-	/**
-	 * Default constructor
-	 */
-	public DraftingThread() {
+	public void startThread() {
+		this.setHasStarted(true);
 		Thread thread = new Thread(this);
 		thread.start();
 	}
@@ -32,7 +31,9 @@ public class DraftingThread implements Runnable {
 		do {
 
 			try {
-				System.out.println(this.reserveTime);
+				if (this.reserveTime % 10 == 0) {
+					System.out.println(this.reserveTime + " seconds of reserve time remaining.");
+				}
 				this.reserveTime--;
 				Thread.sleep(1000);
 				synchronized (this) {
@@ -43,7 +44,7 @@ public class DraftingThread implements Runnable {
 			} catch (InterruptedException e) {
 			} // end of try catch
 
-		} while (reserveTime >= 0 && suspended == false);
+		} while (this.reserveTime >= 0 && this.suspended == false);
 
 	} // end of run()
 
@@ -51,15 +52,57 @@ public class DraftingThread implements Runnable {
 	 * Sets the value of suspended to true, pausing the run() method.
 	 */
 	synchronized void suspend() {
-		this.suspended = true;
+		this.setSuspended(true);
 	}
 
 	/**
 	 * Sets the value of suspended to false, resuming the run() method.
 	 */
 	synchronized void resume() {
-		this.suspended = false;
+		this.setSuspended(false);
 		notify();
+	}
+
+	/**
+	 * @return the reserveTime
+	 */
+	public int getReserveTime() {
+		return reserveTime;
+	}
+
+	/**
+	 * @param reserveTime the reserveTime to set
+	 */
+	public void setReserveTime(int reserveTime) {
+		this.reserveTime = reserveTime;
+	}
+
+	/**
+	 * @return the suspended
+	 */
+	public Boolean getSuspended() {
+		return suspended;
+	}
+
+	/**
+	 * @param suspended the suspended to set
+	 */
+	public void setSuspended(Boolean suspended) {
+		this.suspended = suspended;
+	}
+
+	/**
+	 * @return the hasStarted
+	 */
+	public Boolean getHasStarted() {
+		return hasStarted;
+	}
+
+	/**
+	 * @param hasStarted the hasStarted to set
+	 */
+	public void setHasStarted(Boolean hasStarted) {
+		this.hasStarted = hasStarted;
 	}
 
 }
