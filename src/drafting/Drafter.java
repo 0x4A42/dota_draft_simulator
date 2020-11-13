@@ -413,7 +413,7 @@ public class Drafter {
 			randomHero = (String) values[generator.nextInt(values.length)];
 		} while (heroes.get(randomHero) == false);
 		return randomHero;
-	}
+	} // end of randomHero
 
 	/***
 	 * Updates the Team object to set all of the heroes picked for each team.

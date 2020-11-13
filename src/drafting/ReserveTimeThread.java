@@ -22,6 +22,12 @@ public class ReserveTimeThread implements Runnable {
 	private Boolean suspended = false; // controls the pausing of the thread
 	private Boolean hasStarted = false; // tracks if the thread has previously been started
 
+	
+	public ReserveTimeThread() {
+
+	}
+	
+
 	public void startThread() {
 		this.setHasStarted(true);
 		Thread thread = new Thread(this);

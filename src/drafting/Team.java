@@ -25,12 +25,12 @@ public class Team {
 	 * @param fifthHero  the fifth hero picked by the team
 	 */
 	public Team(Side side, String firstHero, String secondHero, String thirdHero, String fourthHero, String fifthHero) {
-		this.side = side;
-		this.firstHero = firstHero;
-		this.secondHero = secondHero;
-		this.thirdHero = thirdHero;
-		this.fourthHero = fourthHero;
-		this.fifthHero = fifthHero;
+		this.setSide(side);
+		this.setFirstHero(firstHero);
+		this.setSecondHero(secondHero);
+		this.setThirdHero(thirdHero);
+		this.setFourthHero(fourthHero);
+		this.setFifthHero(fifthHero);
 	}
 
 	/**
@@ -121,7 +121,7 @@ public class Team {
 
 	public void printHeroes() {
 		System.out.println("The heroes on " + this.side + " are: " + this.firstHero + ", " + this.secondHero + ", "
-				+ this.thirdHero + ", " + this.fourthHero + ", and " + this.fifthHero +".");
+				+ this.thirdHero + ", " + this.fourthHero + ", and " + this.fifthHero + ".");
 	}
 
 } // end of class
