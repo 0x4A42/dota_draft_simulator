@@ -1,8 +1,21 @@
 package drafting;
 
+/***
+ * This class will be used to track an int, which decrements once per second
+ * when active, that will represent the team's natural draft time.
+ * 
+ * Each team has 35 seconds of draft time with each pick or ban in which they
+ * must select a hero. Failure to do so will result in their result time (130
+ * seconds) being used.
+ * 
+ * This 35 seconds refreshes with each new pick or ban.
+ * 
+ * Will be ran in a separate thread as there is need to constantly update and
+ * track this value.
+ */
 public class DraftTimeThread implements Runnable {
 
-	int draftTime = 10;
+	private int draftTime = 35;
 	Thread thread = new Thread(this);
 
 	/**
@@ -18,9 +31,10 @@ public class DraftTimeThread implements Runnable {
 
 	@Override
 	/**
-	 * Runs the thread. Counts down from 35 every second, representing the reserve
-	 * time a team has. Pauses when suspended is true (set when not the team's turn
-	 * to pick, or when within normal draft time)
+	 * Runs the thread.
+	 * 
+	 * Counts down from 35 every second, representing the reserve time a team has.
+	 * 
 	 */
 	public void run() {
 		do {
@@ -39,5 +53,19 @@ public class DraftTimeThread implements Runnable {
 		} while (this.draftTime > 0);
 
 	} // end of run()
+
+	/**
+	 * @return the draftTime
+	 */
+	public int getDraftTime() {
+		return draftTime;
+	}
+
+	/**
+	 * @param draftTime the draftTime to set
+	 */
+	public void setDraftTime(int draftTime) {
+		this.draftTime = draftTime;
+	}
 
 }

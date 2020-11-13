@@ -13,7 +13,17 @@ A video showing the drafting process of a professional game can be seen [here](h
 
 # What it does
 
-This tool essentially mimics the drafting process. 
+This tool mimics the drafting process within DOTA 2, as detailed above. Upon running the tool, the user will be prompted for which side will get first pick. Following this, each team will take it in turn to pick, or ban, a hero. 
+
+A hero can only be uniquely banned or picked once, resulting in a repeated prompt if a user attempts to pick or ban an unavailable hero. Failure to pick within the alloted time, or entering 'random', will randomly pick a hero for the team.
 # How to use
 
-# Potential Future Developments
+# To Do
+Testing
+Allow user to begin another draft after one finishes.
+Update README with instructions on how to run.
+Tidy files on GitHub (remove .gitignore, etc).
+
+# Possible Future Developments
+Make a GUI (still desktop based)
+Make it web based

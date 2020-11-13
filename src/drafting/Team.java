@@ -119,10 +119,9 @@ public class Team {
 		this.fifthHero = fifthHero;
 	}
 
-	@Override
-	public String toString() {
-		return "Team [side=" + side + ", firstHero=" + firstHero + ", secondHero=" + secondHero + ", thirdHero="
-				+ thirdHero + ", fourthHero=" + fourthHero + ", fifthHero=" + fifthHero + "]";
+	public void printHeroes() {
+		System.out.println("The heroes on " + this.side + " are: " + this.firstHero + ", " + this.secondHero + ", "
+				+ this.thirdHero + ", " + this.fourthHero + ", and " + this.fifthHero +".");
 	}
 
 } // end of class

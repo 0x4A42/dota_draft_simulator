@@ -1,19 +1,26 @@
 package drafting;
 
 /***
- * This class will be used for running an additional thread that will represent
- * the team's reserve time. Each team has 130 seconds of reserve time that they
- * can use through the entire draft, which begins to be used once they run out
- * of the initial 30 seconds draft team for each pick or ban. The 30 seconds
- * refreshes with each new pick or ban, whereas the reserve time is a constant.
+ * This class will be used to track an int, which decrements once per second
+ * when active, that will represent the team's reserve time.
  * 
- * @author Jordan
- *
+ * Each team has 130 seconds of reserve time that they can use through the
+ * entire draft, which begins to be used once they run out of the initial 35
+ * seconds draft team for each pick or ban.
+ * 
+ * This 130 seconds is a one time value which will never be refreshed, unlike
+ * the natural draft time.
+ * 
+ * Failure to pick a hero once the reserve time has been depleted will result in
+ * a random hero being chosen.
+ * 
+ * Will be ran in a separate thread as there is need to constantly update and
+ * track this value.
  */
 public class ReserveTimeThread implements Runnable {
 	private int reserveTime = 130; // the team's total reserve time for the draft
 	private Boolean suspended = false; // controls the pausing of the thread
-	private Boolean hasStarted = false;
+	private Boolean hasStarted = false; // tracks if the thread has previously been started
 
 	public void startThread() {
 		this.setHasStarted(true);
@@ -31,11 +38,14 @@ public class ReserveTimeThread implements Runnable {
 		do {
 
 			try {
-				if (this.reserveTime % 10 == 0) {
+				if (this.reserveTime % 5 == 0) {
 					System.out.println(this.reserveTime + " seconds of reserve time remaining.");
 				}
 				this.reserveTime--;
 				Thread.sleep(1000);
+				// if suspended = true, wait as thread has been 'paused'. This will be due to
+				// the team either ending their turn or running out of reserve time. The thread
+				// is paused until the next turn where they run out of default time.
 				synchronized (this) {
 					while (this.suspended == true) {
 						wait();
@@ -44,7 +54,7 @@ public class ReserveTimeThread implements Runnable {
 			} catch (InterruptedException e) {
 			} // end of try catch
 
-		} while (this.reserveTime >= 0 && this.suspended == false);
+		} while (this.reserveTime > 0 && this.suspended == false);
 
 	} // end of run()
 
