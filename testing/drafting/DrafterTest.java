@@ -109,6 +109,9 @@ public class DrafterTest {
 	}
 
 	@Test
+	/**
+	 * Tests the banOrPickHero method when it is a Ban phase of the draft
+	 */
 	void testBanOrPickHeroBan() {
 		System.out.println("Please enter which hero you wish to ban.");
 		String heroToBan = "MARS";
@@ -117,6 +120,9 @@ public class DrafterTest {
 	}
 
 	@Test
+	/**
+	 * Tests the banOrPickHero method when it is a Pick phase of the draft
+	 */
 	void testBanOrPickHeroPick() {
 		String heroToPick = "JUGGERNAUT";
 		System.out.println("Please enter which hero you wish to pick.");
@@ -246,6 +252,10 @@ public class DrafterTest {
 	}
 
 	@Test
+	/**
+	 * Tests the method which tracks when to random a hero. This tests the
+	 * functionality when randoming will occur.
+	 */
 	void testDetermineWhenToRandomTrue() {
 		normalDraftTime.setDraftTime(0);
 		radiantReserveTimeThread.setReserveTime(0);
@@ -258,6 +268,10 @@ public class DrafterTest {
 	}
 
 	@Test
+	/**
+	 * Tests the method which tracks when to random a hero. This tests the
+	 * functionality when randoming will not occur.
+	 */
 	void testDetermineWhenToRandomFalse() {
 		normalDraftTime.setDraftTime(35);
 		radiantReserveTimeThread.setReserveTime(130);
@@ -270,6 +284,9 @@ public class DrafterTest {
 	}
 
 	@Test
+	/**
+	 * This tests the method which rolls a random hero.
+	 */
 	void testRandomHero() {
 		String expected = "default value";
 		String randomHero = Drafter.randomHero(heroes);
@@ -277,6 +294,9 @@ public class DrafterTest {
 	}
 
 	@Test
+	/**
+	 * Tests the first hero is successfully updated for the Team object.
+	 */
 	void testUpdateTeamObjectFirst() {
 		String firstHero = "JAKIRO";
 		String secondHero = "IO";
@@ -291,8 +311,11 @@ public class DrafterTest {
 		Drafter.updateTeamObject(radiantHeroes, radiant);
 		assertEquals(firstHero, radiant.getFirstHero());
 	}
-	
+
 	@Test
+	/**
+	 * Tests the second hero is successfully updated for the Team object.
+	 */
 	void testUpdateTeamObjectSecond() {
 		String firstHero = "JAKIRO";
 		String secondHero = "IO";
@@ -307,8 +330,11 @@ public class DrafterTest {
 		Drafter.updateTeamObject(radiantHeroes, radiant);
 		assertEquals(secondHero, radiant.getSecondHero());
 	}
-	
+
 	@Test
+	/**
+	 * Tests the third hero is successfully updated for the Team object.
+	 */
 	void testUpdateTeamObjectThird() {
 		String firstHero = "JAKIRO";
 		String secondHero = "IO";
@@ -323,8 +349,11 @@ public class DrafterTest {
 		Drafter.updateTeamObject(radiantHeroes, radiant);
 		assertEquals(thirdHero, radiant.getThirdHero());
 	}
-	
+
 	@Test
+	/**
+	 * Tests the fourth hero is successfully updated for the Team object.
+	 */
 	void testUpdateTeamObjectFourth() {
 		String firstHero = "JAKIRO";
 		String secondHero = "IO";
@@ -339,8 +368,11 @@ public class DrafterTest {
 		Drafter.updateTeamObject(direHeroes, dire);
 		assertEquals(fourthHero, dire.getFourthHero());
 	}
-	
+
 	@Test
+	/**
+	 * Tests the fifth hero is successfully updated for the Team object.
+	 */
 	void testUpdateTeamObjectFifth() {
 		String firstHero = "JAKIRO";
 		String secondHero = "IO";

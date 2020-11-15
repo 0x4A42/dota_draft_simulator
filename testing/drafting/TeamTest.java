@@ -33,11 +33,7 @@ public class TeamTest {
 		testTeam = new Team();
 	}
 
-	@Test
-	void testConstructorSide() {
-
-	}
-
+	
 	@Test
 	/**
 	 * Tests the Side is successfully set to RADIANT
