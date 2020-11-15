@@ -21,11 +21,11 @@ This tool was developed using Java 8.
 
 1. Download and extract the code.  
 2. Navigate the command line to the code (go inside src/drafting to where the .java files are).  
-3. Compile the code. *  
+3. Compile the code. *(See below if unsure how to!)
 4. Run the code using the command 'java drafting.Drafter'.  
 6. Have fun!  
 
-* Run the following commands to compile the code. A comma denotes a new command: 
+Run the following commands to compile the code (works best following this order): 
 * javac DraftTimeThread.java  
 * javac ReserveTimeThread.java  
 * javac Side.java
